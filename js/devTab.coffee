@@ -1,7 +1,7 @@
 $ = jQuery
 
 # Adds plugin object to jQuery
-$.fn.extend {}=
+$.fn.extend {} =
   devTab: (options) ->
     settings =
       slideY:  false
@@ -19,16 +19,42 @@ $.fn.extend {}=
       o = options
       obj = $(@)
 
-      # setup menu
-      $menu = ('<ul class="tab-menu">')
-      obj.prepend($menu)
+      # add menu container to dom
+      obj.prepend('<ul class="tab-menu"/>')
+      $menu = obj.find('.tab-menu')
 
       # find and append each title to menu
       obj.find('.title')
-         .each( ->
-             $(this).clone()
-                    .wrap('<li/>')
-                    .appendTo($menu)
+         .clone()
+         .appendTo($menu)
+         .wrap('<li/>')
 
-             $(this).remove()
-         )
+      # remove the titles in content
+      obj.find('.tab .title')
+         .remove()
+
+      log "add menu and remove title"
+
+      # hide not first tab
+      obj.find('.tab:not(:first)')
+         .hide()
+
+      log "tabs not first hidden"
+
+      # mouse hover interaction
+      $menu.find('li').hover (->
+          index = $(@).index()
+        
+          $(@).addClass('active')
+
+          # if o.slideY, do this
+          # if o.slideX do this
+          # else
+
+          # default show/hide transition
+          obj.find('.tab')
+             .hide()
+             .eq(index)
+             .show()
+      ), ->
+          $(@).removeClass('active')

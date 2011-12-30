@@ -22,11 +22,20 @@
         var $menu, o, obj;
         o = options;
         obj = $(this);
-        $menu = '<ul class="tab-menu">';
-        obj.prepend($menu);
-        return obj.find('.title').each(function() {
-          $(this).clone().wrap('<li/>').appendTo($menu);
-          return $(this).remove();
+        obj.prepend('<ul class="tab-menu"/>');
+        $menu = obj.find('.tab-menu');
+        obj.find('.title').clone().appendTo($menu).wrap('<li/>');
+        obj.find('.tab .title').remove();
+        log("add menu and remove title");
+        obj.find('.tab:not(:first)').hide();
+        log("tabs not first hidden");
+        return $menu.find('li').hover((function() {
+          var index;
+          index = $(this).index();
+          $(this).addClass('active');
+          return obj.find('.tab').hide().eq(index).show();
+        }), function() {
+          return $(this).removeClass('active');
         });
       });
     }
