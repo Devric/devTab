@@ -16,7 +16,7 @@ $.fn.extend {} =
     log "Start here"
     return @each ()->
 
-      o = options
+      o = settings
       obj = $(@)
 
       # add menu container to dom
@@ -41,20 +41,36 @@ $.fn.extend {} =
 
       log "tabs not first hidden"
 
+      log 'slideX:' + o.slideX
+      log 'slideY:' + o.slideY
+
+      # setup dom for both if option slideX | slideY
+      if o.slideX | o.slideY
+          $tab       = obj.find('.tab')
+          $tabWidth  = $tab.width()
+          $tabHeight = $tab.height()
+
       # mouse hover interaction
       $menu.find('li').hover (->
           index = $(@).index()
         
           $(@).addClass('active')
 
-          # if o.slideY, do this
-          # if o.slideX do this
-          # else
+          # if o.slideX, do this
+          if o.slideX
+              do this
 
-          # default show/hide transition
-          obj.find('.tab')
-             .hide()
-             .eq(index)
-             .show()
+          # if o.slideY do this
+          else if o.slideY
+              do this
+
+          # else just show/hide
+          else
+              # default show/hide transition
+              obj.find('.tab')
+                 .hide()
+                 .eq(index)
+                 .show()
+
       ), ->
           $(@).removeClass('active')

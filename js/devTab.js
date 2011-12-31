@@ -19,8 +19,8 @@
       };
       log("Start here");
       return this.each(function() {
-        var $menu, o, obj;
-        o = options;
+        var $menu, $tab, $tabHeight, $tabWidth, o, obj;
+        o = settings;
         obj = $(this);
         obj.prepend('<ul class="tab-menu"/>');
         $menu = obj.find('.tab-menu');
@@ -29,11 +29,24 @@
         log("add menu and remove title");
         obj.find('.tab:not(:first)').hide();
         log("tabs not first hidden");
+        log('slideX:' + o.slideX);
+        log('slideY:' + o.slideY);
+        if (o.slideX | o.slideY) {
+          $tab = obj.find('.tab');
+          $tabWidth = $tab.width();
+          $tabHeight = $tab.height();
+        }
         return $menu.find('li').hover((function() {
           var index;
           index = $(this).index();
           $(this).addClass('active');
-          return obj.find('.tab').hide().eq(index).show();
+          if (o.slideX) {
+            return this();
+          } else if (o.slideY) {
+            return this();
+          } else {
+            return obj.find('.tab').hide().eq(index).show();
+          }
         }), function() {
           return $(this).removeClass('active');
         });
