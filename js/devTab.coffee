@@ -51,22 +51,19 @@ $.fn.extend {} =
           $tabHeight = $tab.height()
 
       # mouse interaction
-      if o.click
+      if o.click # if click true
         $menu.find('li').click (->
             index = $(@).index()
 
             $(@).addClass('active')
 
-            # if o.slideX, do this
-            if o.slideX
+            if o.slideX # if o.slideX, do this
                 do this
 
-            # if o.slideY do this
-            else if o.slideY
+            else if o.slideY # if o.slideY do this
                 do this
 
-            # else just show/hide
-            else
+            else # else just show/hide
                 # default show/hide transition
                 obj.find('.tab')
                     .hide()
@@ -80,16 +77,13 @@ $.fn.extend {} =
             
             $(@).addClass('active')
 
-            # if o.slideX, do this
-            if o.slideX
+            if o.slideX # if o.slideX, do this
                 do this
 
-            # if o.slideY do this
-            else if o.slideY
+            else if o.slideY # if o.slideY do this
                 do this
 
-            # else just show/hide
-            else
+            else # else just show/hide
                 # default show/hide transition
                 obj.find('.tab')
                     .hide()
