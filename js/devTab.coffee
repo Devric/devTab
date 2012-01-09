@@ -6,14 +6,15 @@ $.fn.extend {} =
     settings =
       slideY:  false
       slideX:  false
-      debug:    true
+      click:   false
+      debug:   true
       
     settings = $.extend settings, options
     
     log = (msg) ->      # Simplify logger()
       console?.log msg if settings.debug
     
-    log "Start here"
+    log "devTab initiated"
     return @each ()->
 
       o = settings
@@ -38,8 +39,7 @@ $.fn.extend {} =
       # hide not first tab
       obj.find('.tab:not(:first)')
          .hide()
-
-      log "tabs not first hidden"
+      log "hide all tabs not first"
 
       log 'slideX:' + o.slideX
       log 'slideY:' + o.slideY
@@ -50,27 +50,50 @@ $.fn.extend {} =
           $tabWidth  = $tab.width()
           $tabHeight = $tab.height()
 
-      # mouse hover interaction
-      $menu.find('li').hover (->
-          index = $(@).index()
-        
-          $(@).addClass('active')
+      # mouse interaction
+      if o.click
+        $menu.find('li').click (->
+            index = $(@).index()
 
-          # if o.slideX, do this
-          if o.slideX
-              do this
+            $(@).addClass('active')
 
-          # if o.slideY do this
-          else if o.slideY
-              do this
+            # if o.slideX, do this
+            if o.slideX
+                do this
 
-          # else just show/hide
-          else
-              # default show/hide transition
-              obj.find('.tab')
-                 .hide()
-                 .eq(index)
-                 .show()
+            # if o.slideY do this
+            else if o.slideY
+                do this
 
-      ), ->
-          $(@).removeClass('active')
+            # else just show/hide
+            else
+                # default show/hide transition
+                obj.find('.tab')
+                    .hide()
+                    .eq(index)
+                    .show()
+        )
+      else 
+        $menu.find('li').hover (->
+
+            index = $(@).index()
+            
+            $(@).addClass('active')
+
+            # if o.slideX, do this
+            if o.slideX
+                do this
+
+            # if o.slideY do this
+            else if o.slideY
+                do this
+
+            # else just show/hide
+            else
+                # default show/hide transition
+                obj.find('.tab')
+                    .hide()
+                    .eq(index)
+                    .show()
+        ), ->
+            $(@).removeClass('active')
