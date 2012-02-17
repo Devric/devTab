@@ -12,36 +12,55 @@
                 $('#two').devTab({'click':true});
             });
         </script>
+        
+        <style type="text/css">
+            section {
+                padding:20px;
+                border:1px solid black;
+            }
+        </style>
+
     </head>
     <body>
-        <div class="dev-tab" id="one">
-            <div class="tab">
-                <div class="title">one title 1</div>
-                <div class="content">this is the content</div>
+        <section>
+            <h3>plain <small>default hover</small></h3>
+            <div class="dev-tab" id="one">
+                <div class="tab">
+                    <div class="title">one title 1</div>
+                    <div class="content">this is the content</div>
+                </div>
+                <div class="tab">
+                    <div class="title">one title 2</div>
+                    <div class="content">this is not a content</div>
+                </div>
+                <div class="tab">
+                    <div class="title">one title 3</div>
+                    <div class="content">just testing the content</div>
+                </div>
             </div>
-            <div class="tab">
-                <div class="title">one title 2</div>
-                <div class="content">this is not a content</div>
-            </div>
-            <div class="tab">
-                <div class="title">one title 3</div>
-                <div class="content">just testing the content</div>
-            </div>
-        </div>
+        </section>
 
-        <div class="dev-tab" id="two">
-            <div class="tab">
-                <div class="title">two title 1</div>
-                <div class="content">this is the content</div>
+        <section>
+            <h3>click action</h3>
+            <div class="dev-tab" id="two">
+                <div class="tab">
+                    <div class="title">two title 1</div>
+                    <div class="content">this is the content</div>
+                </div>
+                <div class="tab">
+                    <div class="title">two title 2</div>
+                    <div class="content">this is not a content</div>
+                </div>
+                <div class="tab">
+                    <div class="title">two title 3</div>
+                    <div class="content">just testing the content</div>
+                </div>
             </div>
-            <div class="tab">
-                <div class="title">two title 2</div>
-                <div class="content">this is not a content</div>
-            </div>
-            <div class="tab">
-                <div class="title">two title 3</div>
-                <div class="content">just testing the content</div>
-            </div>
-        </div>
+        </section>
+        <section>
+            <h3>comming soon</h3>
+            <h5>slideX</h5>
+            <h5>slideY</h5>
+        </section>
     </body>
 </html>
