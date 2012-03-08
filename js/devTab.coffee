@@ -52,7 +52,10 @@ $.fn.extend {} =
 
       # mouse interaction
       if o.click # if click true
-        $menu.find('li').click (->
+        $menu.find('li').click (e) ->
+
+            e.preventDefault()
+
             index = $(@).index()
 
             $(@).addClass('active')
@@ -69,9 +72,10 @@ $.fn.extend {} =
                     .hide()
                     .eq(index)
                     .show()
-        )
       else 
-        $menu.find('li').hover (->
+        $menu.find('li').hover (e) ->
+
+            e.preventDefault()
 
             index = $(@).index()
             
@@ -89,5 +93,5 @@ $.fn.extend {} =
                     .hide()
                     .eq(index)
                     .show()
-        ), ->
+        , ->
             $(@).removeClass('active')
