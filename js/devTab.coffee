@@ -4,9 +4,10 @@ $ = jQuery
 $.fn.extend {} =
   devTab: (options) ->
     settings =
+      click:   false
+      menuPosition: 'top'
       slideY:  false
       slideX:  false
-      click:   false
       debug:   true
       
     settings = $.extend settings, options
@@ -20,8 +21,12 @@ $.fn.extend {} =
       o = settings
       obj = $(@)
 
-      # add menu container to dom
-      obj.prepend('<ul class="tab-menu"/>')
+      # add menu container to dom unless option bottom, else prepend
+      if o.menuPosition = 'bottom'
+        obj.append('<ul class="tab-menu"/>')
+      else
+        obj.prepend('<ul class="tab-menu"/>')
+
       $menu = obj.find('.tab-menu')
 
       # find and append each title to menu
@@ -45,7 +50,7 @@ $.fn.extend {} =
       log 'slideY:' + o.slideY
 
       # setup dom for both if option slideX | slideY
-      if o.slideX | o.slideY
+      if o.slideX || o.slideY
           $tab       = obj.find('.tab')
           $tabWidth  = $tab.width()
           $tabHeight = $tab.height()
