@@ -50,12 +50,14 @@ $.fn.extend {} =
       log 'slideY:' + o.slideY
 
       # setup dom for both if option slideX | slideY
+      # ============================================
       if o.slideX || o.slideY
           $tab       = obj.find('.tab')
           $tabWidth  = $tab.width()
           $tabHeight = $tab.height()
 
       # mouse interaction
+      # =================
       if o.click # if click true
         $menu.find('li').click (e) ->
 
@@ -64,6 +66,7 @@ $.fn.extend {} =
             index = $(@).index()
 
             $(@).addClass('active')
+            $(@).siblings().removeClass('active')
 
             if o.slideX # if o.slideX, do this
                 do this

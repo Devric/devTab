@@ -48,6 +48,7 @@
             e.preventDefault();
             index = $(this).index();
             $(this).addClass('active');
+            $(this).siblings().removeClass('active');
             if (o.slideX) {
               return this();
             } else if (o.slideY) {
