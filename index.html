@@ -9,7 +9,7 @@
         <script language="javascript" type="text/javascript">
             $(document).ready(function() {
                 $('#one').devTab();
-                $('#two').devTab({'click':true, 'menuPosition':'bottom'});
+                $('#two').devTab({'click':true, 'menuBottom':true});
                 $('#slideX').devTab({'slideX':true});
             });
         </script>
@@ -28,7 +28,7 @@
     </head>
     <body>
         <section>
-            <h3>plain <small>default hover</small></h3>
+            <h3>Plain <small>default hover</small></h3>
             <div class="dev-tab" id="one">
                 <div class="tab">
                     <div class="title">one title 1</div>
@@ -46,7 +46,7 @@
         </section>
 
         <section>
-            <h3>click action <small>+ menuPosition:bottom</small></h3>
+            <h3>Click action <small>+ menuPosition:bottom</small></h3>
             <div class="dev-tab" id="two">
                 <div class="tab">
                     <div class="title">two title 1</div>
@@ -64,7 +64,7 @@
         </section>
 
         <section>
-            <h3>click action <small>+ menuPosition:bottom</small></h3>
+            <h3>Hover action <small>slideX</small></h3>
             <div class="dev-tab" id="slideX">
                 <div class="tab">
                     <div class="title">two title 1</div>

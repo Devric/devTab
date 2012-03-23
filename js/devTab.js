@@ -8,7 +8,7 @@
       var log, settings;
       settings = {
         click: false,
-        menuPosition: 'top',
+        menuBottom: false,
         slideY: false,
         slideX: false,
         debug: true
@@ -19,61 +19,61 @@
           return typeof console !== "undefined" && console !== null ? console.log(msg) : void 0;
         }
       };
-      log("devTab initiated");
+      log("devTab initiated on #" + $(this).attr('id'));
       return this.each(function() {
-        var $menu, $tab, $tabHeight, $tabWidth, o, obj;
+        var $menu, $obj, $tab, $tabHeight, $tabWidth, addRemoveClass, detectFx, o, xSlide, ySlide;
         o = settings;
-        obj = $(this);
-        if (o.menuPosition = 'bottom') {
-          obj.append('<ul class="tab-menu"/>');
+        $obj = $(this);
+        $tab = $obj.find('.tab');
+        $tabWidth = $tab.width();
+        $tabHeight = $tab.height();
+        if (o.menuBottom) {
+          $obj.append('<ul class="tab-menu"/>');
         } else {
-          obj.prepend('<ul class="tab-menu"/>');
+          $obj.prepend('<ul class="tab-menu"/>');
         }
-        $menu = obj.find('.tab-menu');
-        obj.find('.title').clone().appendTo($menu).wrap('<li/>');
-        obj.find('.tab .title').remove();
-        log("add menu and remove title");
-        obj.find('.tab:not(:first)').hide();
-        log("hide all tabs not first");
-        log('slideX:' + o.slideX);
-        log('slideY:' + o.slideY);
-        if (o.slideX || o.slideY) {
-          $tab = obj.find('.tab');
-          $tabWidth = $tab.width();
-          $tabHeight = $tab.height();
-        }
+        $menu = $obj.find('.tab-menu');
+        $obj.find('.title').clone().appendTo($menu).wrap('<li/>');
+        $tab.find('.title').remove();
+        $obj.find('.tab:not(:first)').hide();
         if (o.click) {
-          return $menu.find('li').click(function(e) {
-            var index;
+          $menu.find('li').click(function(e) {
+            var el, index;
             e.preventDefault();
             index = $(this).index();
-            $(this).addClass('active');
-            $(this).siblings().removeClass('active');
-            if (o.slideX) {
-              return this();
-            } else if (o.slideY) {
-              return this();
-            } else {
-              return obj.find('.tab').hide().eq(index).show();
-            }
+            el = $(this);
+            addRemoveClass(el);
+            return detectFx(index);
           });
         } else {
-          return $menu.find('li').hover(function(e) {
-            var index;
+          $menu.find('li').hover(function(e) {
+            var el, index;
             e.preventDefault();
             index = $(this).index();
-            $(this).addClass('active');
-            if (o.slideX) {
-              return this();
-            } else if (o.slideY) {
-              return this();
-            } else {
-              return obj.find('.tab').hide().eq(index).show();
-            }
-          }, function() {
-            return $(this).removeClass('active');
+            el = $(this);
+            addRemoveClass(el);
+            return detectFx(index);
           });
         }
+        addRemoveClass = function(el) {
+          el.addClass('active');
+          return el.siblings().removeClass('active');
+        };
+        detectFx = function(index) {
+          if (o.slideX) {
+            return xSlide();
+          } else if (o.slideY) {
+            return true;
+          } else {
+            return $tab.hide().eq(index).show();
+          }
+        };
+        xSlide = function() {
+          return log('slideX activated');
+        };
+        return ySlide = function() {
+          return log('slideY activated');
+        };
       });
     }
   });
