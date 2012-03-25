@@ -12,7 +12,7 @@ $.fn.extend {} =
       
     settings = $.extend settings, options
     
-    window.log = (msg) ->      # Simplify logger()
+    log = (msg) ->      # Simplify logger()
       console?.log msg if settings.debug
     
     log  "devTab initiated on #" + $(@).attr('id')
@@ -102,10 +102,10 @@ $.fn.extend {} =
                 .eq(index)
                 .show()
 
-# X slides
-xSlide = ->
-  log 'slideX activated'
+      # X slides
+      xSlide = ->
+        log 'slideX activated'
 
-# Y slides
-ySlide = ->
-  log 'slideY activated'
+      # Y slides
+      ySlide = ->
+        log 'slideY activated'
