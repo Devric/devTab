@@ -1,11 +1,11 @@
 (function() {
-  var $;
+  var $, xSlide, ySlide;
 
   $ = jQuery;
 
   $.fn.extend({
     devTab: function(options) {
-      var log, settings;
+      var settings;
       settings = {
         click: false,
         menuBottom: false,
@@ -14,14 +14,14 @@
         debug: true
       };
       settings = $.extend(settings, options);
-      log = function(msg) {
+      window.log = function(msg) {
         if (settings.debug) {
           return typeof console !== "undefined" && console !== null ? console.log(msg) : void 0;
         }
       };
       log("devTab initiated on #" + $(this).attr('id'));
       return this.each(function() {
-        var $menu, $obj, $tab, $tabHeight, $tabWidth, addRemoveClass, detectFx, o, xSlide, ySlide;
+        var $menu, $obj, $tab, $tabHeight, $tabWidth, addRemoveClass, detectFx, o;
         o = settings;
         $obj = $(this);
         $tab = $obj.find('.tab');
@@ -60,7 +60,7 @@
           el.addClass('active');
           return el.siblings().removeClass('active');
         };
-        detectFx = function(index) {
+        return detectFx = function(index) {
           if (o.slideX) {
             return xSlide();
           } else if (o.slideY) {
@@ -69,14 +69,16 @@
             return $tab.hide().eq(index).show();
           }
         };
-        xSlide = function() {
-          return log('slideX activated');
-        };
-        return ySlide = function() {
-          return log('slideY activated');
-        };
       });
     }
   });
+
+  xSlide = function() {
+    return log('slideX activated');
+  };
+
+  ySlide = function() {
+    return log('slideY activated');
+  };
 
 }).call(this);
