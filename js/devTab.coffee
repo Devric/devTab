@@ -47,6 +47,10 @@ $.fn.extend {} =
       # hide not first tab
       $obj.find('.tab:not(:first)')
          .hide()
+         
+      # active first link
+      $obj.find('li:first')
+         .addClass 'active'
 
       # click interaction
       # =================
@@ -79,7 +83,6 @@ $.fn.extend {} =
 
       # Functions
       # =================
-
 
       # add remove class
       addRemoveClass = (el)->
