@@ -38,9 +38,7 @@
     </div>
 
 ### log
-- fix 002 : clean up functions
-
-- release 008 : change document.ready to window.load due to dynamic height/width, preparing for slideX,slideY
+- 008 : change document.ready to window.load due to dynamic height/width, preparing for slideX,slideY
 
 ### todo
     - effects
