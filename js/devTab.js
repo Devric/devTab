@@ -36,6 +36,7 @@
         $obj.find('.title').clone().appendTo($menu).wrap('<li/>');
         $tab.find('.title').remove();
         $obj.find('.tab:not(:first)').hide();
+        $obj.find('li:first').addClass('active');
         if (o.click) {
           $menu.find('li').click(function(e) {
             var el, index;
