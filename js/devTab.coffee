@@ -114,11 +114,11 @@ _triggerAction = (el, click, fx)->
     log 'Trigger by click'
     $link.click(->
       if !($(@).hasClass("active"))
+
         log 'current slide ' + $current
         log $index = $(@).index()
         __addRemoveClass(this)
         __fxAction(el, fx, $current, $index)
-
 
         # update current
         $current = $index
@@ -129,10 +129,14 @@ _triggerAction = (el, click, fx)->
     log 'Trigger by hover'
     $link.hover(->
       if !($(@).hasClass("active"))
+
         log 'current slide ' + $current
         log $index = $(@).index()
+
         __addRemoveClass(this)
         __fxAction(el, fx, $current, $index)
+
+        # update current
         $current = $index
     )
 
@@ -188,5 +192,5 @@ __diff = (current, index) ->
 # find direction by negative
 # ===============================
 __detectDirection = (value) ->
-  # if negative than += else -=
+  # if negative than -=next else +=prev 
   if value < 0  then '-=' else '+='
