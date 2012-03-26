@@ -4,108 +4,165 @@ $ = jQuery
 $.fn.extend {} =
   devTab: (options) ->
     settings =
-      click      : false
+      click      : false    # hover or click
       menuBottom : false
-      slideY     : false
-      slideX     : false
+      fx         : 'fade' # slideX | slideY
       debug      : true
       
     settings = $.extend settings, options
     
-    log = (msg) ->      # Simplify logger()
+    window.log = (msg) ->      # Simplify logger()
       console?.log msg if settings.debug
     
-    log  "devTab initiated on #" + $(@).attr('id')
+    log  "devTab initiated on #" + $(@).attr('id') + '==========='
+
     return @each ()->
 
       o = settings
       $obj = $(@)
 
-      $tab       = $obj.find('.tab')
-      $tabWidth  = $tab.width()
-      $tabHeight = $tab.height()
+      _buildDom($(@), o.menuBottom, o.fx )
 
-      # prepend/append menu to dom
-      # ==========================
-      if o.menuBottom
-        $obj.append('<ul class="tab-menu"/>')
-      else
-        $obj.prepend('<ul class="tab-menu"/>')
+      _triggerAction($obj, o.click, o.fx)
 
-      $menu = $obj.find('.tab-menu')
+###
+    Functions
+###
 
-      # find and append each title to menu
-      $obj.find('.title')
-         .clone()
-         .appendTo($menu)
-         .wrap('<li/>')
+# setup dom
+# ===============================
 
-      # remove the titles in content
-      $tab.find('.title')
-         .remove()
+_buildDom = (el, menuPos, fx)->
+  log '+ build dom start for' , el
 
-      # hide not first tab
-      $obj.find('.tab:not(:first)')
-         .hide()
-         
-      # active first link
-      $obj.find('li:first')
-         .addClass 'active'
+  #  build menu top or bottom
+  $menu = '<ul class="tab-menu"/>'
+  $tabNumber = el.find('.tab').length
 
-      # click interaction
-      # =================
-      if o.click # if click true
-        $menu.find('li').click (e) ->
-            e.preventDefault()
+  if menuPos
+    el.append($menu) 
+  else
+    el.prepend($menu)
 
-            # var
-            index = $(@).index()
-            el = $(@)
+  $menu = el.find('.tab-menu')
+  $title = el.find('.title')
 
-            # actions
-            addRemoveClass(el)
-            detectFx(index)
+  log 'menu built'
 
-      # hover interaction
-      # =================
-      else 
-        $menu.find('li').hover (e) ->
-            e.preventDefault()
+  # append titles as links
+  $title.clone()
+        .appendTo($menu)
+        .wrap('<li/>')
 
-            # var
-            index = $(@).index()
-            el = $(@)
+  $title.remove()
 
-            # actions
-            addRemoveClass(el)
-            detectFx(index)
+  log 'menu links relocated'
+
+  # build dom for slides
+  if fx == 'slideX' || fx == 'slideY'
+    el.find('.tab')
+      .wrapAll('<div class="wrap"><div class="container"></div></div>')
+
+    el.find('.wrap').css
+      'overflow' : 'hidden'
+      'width'    : __getTabSize(el, 'x')
+      'height'   : __getTabSize(el, 'y')
+
+    if fx =='slideX'
+      el.find('.tab').css
+        'width'    : __getTabSize(el, 'x')
+        'float'    : 'left'
+
+      el.find('.container').css
+        'width'    : __getTabSize(el, 'x') * $tabNumber + 1
+        'height'   : __getTabSize(el, 'y')
 
 
-      # Functions
-      # =================
+      log 'its slide x functions'
 
-      # add remove class
-      addRemoveClass = (el)->
-        el.addClass('active')
-        el.siblings().removeClass('active')
+    if fx =='slideY'
+      el.find('.tab').css
+        'height'   : __getTabSize(el, 'y')
 
-      # detect slide or hide
-      detectFx = (index)->
-        if o.slideX # if o.slideX, do this
-            xSlide()
+      el.find('.container').css
+        'width'    : __getTabSize(el, 'x')
+        'height'   : __getTabSize(el, 'y') * $tabNumber
 
-        else if o.slideY # if o.slideY do this
-            return true
+      log 'its slide y functions'
 
-        else # else just show/hide
-            $tab.hide()
-                .eq(index)
-                .show()
+  else
+  # hide tabs for fx:fade
+    el.find('.tab:not(:first)')
+      .hide()
+    
+    log 'hide tab for none slide'
 
-      # X slides
-      xSlide = ->
-        log 'slideX activated'
+  # active first link
+  el.find('li:first')
+      .addClass 'active'
 
-      # Y slides
-      ySlide = ->
-        log 'slideY activated'
+  log '- finish dom building'
+
+
+
+# Trigger change by click | hover
+# ===============================
+
+_triggerAction = (el, click, fx)->
+  $menu = el.find('.tab-menu')
+  $tab  = el.find('.tab')
+  $link = $menu.find('li')
+
+  if click
+    log 'Trigger by click'
+    $link.click(->
+      if !($(@).hasClass("active"))
+        log $index = $(@).index()
+        __addRemoveClass(this)
+        __fxAction($tab, fx, $index)
+    )
+
+  else
+    log 'Trigger by hover'
+    $link.hover(->
+      if !($(@).hasClass("active"))
+        log $index = $(@).index()
+        __addRemoveClass(this)
+        __fxAction($tab, fx, $index)
+    )
+
+# add/remove .active after _triggerAction
+# ===============================
+
+__addRemoveClass = (el) ->
+  $(el).addClass('active')
+  $(el).siblings().removeClass('active')
+
+
+
+# fx actions for: used in _triggerAction
+# ===============================
+
+__fxAction = (el, fx, index)->
+  switch fx
+    when 'fade'
+      el.hide()
+          .eq(index)
+          .show()
+
+    when 'slideX'
+      log 'slideX'
+    when 'slideY'
+      log 'slideY'
+
+
+
+# find content width / height for: _buildDom
+# ===============================
+
+__getTabSize = (el, side)->
+  switch side 
+    when 'x'
+      return el.find('.tab').width()
+    when 'y'
+      return el.find('.tab').height()
