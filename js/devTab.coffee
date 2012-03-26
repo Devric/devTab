@@ -7,6 +7,8 @@ $.fn.extend {} =
       click      : false    # hover or click
       menuBottom : false
       fx         : 'fade' # slideX | slideY
+      auto       : false
+      speed      : 400
       debug      : true
       
     settings = $.extend settings, options
@@ -25,9 +27,7 @@ $.fn.extend {} =
 
       _triggerAction($obj, o.click, o.fx)
 
-###
-    Functions
-###
+# ===================== Functions
 
 # setup dom
 # ===============================
@@ -74,11 +74,9 @@ _buildDom = (el, menuPos, fx)->
         'float'    : 'left'
 
       el.find('.container').css
-        'width'    : __getTabSize(el, 'x') * $tabNumber + 1
+        'width'    : __getTabSize(el, 'x') * $tabNumber 
         'height'   : __getTabSize(el, 'y')
 
-
-      log 'its slide x functions'
 
     if fx =='slideY'
       el.find('.tab').css
@@ -88,16 +86,15 @@ _buildDom = (el, menuPos, fx)->
         'width'    : __getTabSize(el, 'x')
         'height'   : __getTabSize(el, 'y') * $tabNumber
 
-      log 'its slide y functions'
-
   else
+
   # hide tabs for fx:fade
     el.find('.tab:not(:first)')
       .hide()
     
     log 'hide tab for none slide'
 
-  # active first link
+  # active first link on init
   el.find('li:first')
       .addClass 'active'
 
@@ -110,25 +107,33 @@ _buildDom = (el, menuPos, fx)->
 
 _triggerAction = (el, click, fx)->
   $menu = el.find('.tab-menu')
-  $tab  = el.find('.tab')
   $link = $menu.find('li')
+  $current = 0
 
   if click
     log 'Trigger by click'
     $link.click(->
       if !($(@).hasClass("active"))
+        log 'current slide ' + $current
         log $index = $(@).index()
         __addRemoveClass(this)
-        __fxAction($tab, fx, $index)
+        __fxAction(el, fx, $current, $index)
+
+
+        # update current
+        $current = $index
+
     )
 
   else
     log 'Trigger by hover'
     $link.hover(->
       if !($(@).hasClass("active"))
+        log 'current slide ' + $current
         log $index = $(@).index()
         __addRemoveClass(this)
-        __fxAction($tab, fx, $index)
+        __fxAction(el, fx, $current, $index)
+        $current = $index
     )
 
 # add/remove .active after _triggerAction
@@ -139,21 +144,27 @@ __addRemoveClass = (el) ->
   $(el).siblings().removeClass('active')
 
 
-
 # fx actions for: used in _triggerAction
 # ===============================
 
-__fxAction = (el, fx, index)->
+__fxAction = (el, fx, current, index)->
+  log el
   switch fx
     when 'fade'
-      el.hide()
-          .eq(index)
-          .show()
+      el.find('.tab')
+        .hide()
+        .eq(index)
+        .show()
 
     when 'slideX'
-      log 'slideX'
+      el.find('.container')
+        .animate
+         'margin-left' : __detectDirection(__diff(current, index)) + ( __getTabSize(el,'x') * Math.abs(__diff(current, index)))
+
     when 'slideY'
-      log 'slideY'
+      el.find('.container')
+        .animate
+         'margin-top' : __detectDirection(__diff(current, index)) + ( __getTabSize(el,'y') * Math.abs(__diff(current, index)))
 
 
 
@@ -166,3 +177,16 @@ __getTabSize = (el, side)->
       return el.find('.tab').width()
     when 'y'
       return el.find('.tab').height()
+
+
+# Find direction by calc difference
+# ===============================
+__diff = (current, index) ->
+  return current - index
+  log current - index
+
+# find direction by negative
+# ===============================
+__detectDirection = (value) ->
+  # if negative than += else -=
+  if value < 0  then '-=' else '+='

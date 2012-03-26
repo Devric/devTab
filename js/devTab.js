@@ -1,5 +1,5 @@
 (function() {
-  var $, __addRemoveClass, __fxAction, __getTabSize, _buildDom, _triggerAction;
+  var $, __addRemoveClass, __detectDirection, __diff, __fxAction, __getTabSize, _buildDom, _triggerAction;
 
   $ = jQuery;
 
@@ -10,6 +10,8 @@
         click: false,
         menuBottom: false,
         fx: 'fade',
+        auto: false,
+        speed: 400,
         debug: true
       };
       settings = $.extend(settings, options);
@@ -28,10 +30,6 @@
       });
     }
   });
-
-  /*
-      Functions
-  */
 
   _buildDom = function(el, menuPos, fx) {
     var $menu, $tabNumber, $title;
@@ -62,10 +60,9 @@
           'float': 'left'
         });
         el.find('.container').css({
-          'width': __getTabSize(el, 'x') * $tabNumber + 1,
+          'width': __getTabSize(el, 'x') * $tabNumber,
           'height': __getTabSize(el, 'y')
         });
-        log('its slide x functions');
       }
       if (fx === 'slideY') {
         el.find('.tab').css({
@@ -75,7 +72,6 @@
           'width': __getTabSize(el, 'x'),
           'height': __getTabSize(el, 'y') * $tabNumber
         });
-        log('its slide y functions');
       }
     } else {
       el.find('.tab:not(:first)').hide();
@@ -86,18 +82,20 @@
   };
 
   _triggerAction = function(el, click, fx) {
-    var $link, $menu, $tab;
+    var $current, $link, $menu;
     $menu = el.find('.tab-menu');
-    $tab = el.find('.tab');
     $link = $menu.find('li');
+    $current = 0;
     if (click) {
       log('Trigger by click');
       return $link.click(function() {
         var $index;
         if (!($(this).hasClass("active"))) {
+          log('current slide ' + $current);
           log($index = $(this).index());
           __addRemoveClass(this);
-          return __fxAction($tab, fx, $index);
+          __fxAction(el, fx, $current, $index);
+          return $current = $index;
         }
       });
     } else {
@@ -105,9 +103,11 @@
       return $link.hover(function() {
         var $index;
         if (!($(this).hasClass("active"))) {
+          log('current slide ' + $current);
           log($index = $(this).index());
           __addRemoveClass(this);
-          return __fxAction($tab, fx, $index);
+          __fxAction(el, fx, $current, $index);
+          return $current = $index;
         }
       });
     }
@@ -118,14 +118,19 @@
     return $(el).siblings().removeClass('active');
   };
 
-  __fxAction = function(el, fx, index) {
+  __fxAction = function(el, fx, current, index) {
+    log(el);
     switch (fx) {
       case 'fade':
-        return el.hide().eq(index).show();
+        return el.find('.tab').hide().eq(index).show();
       case 'slideX':
-        return log('slideX');
+        return el.find('.container').animate({
+          'margin-left': __detectDirection(__diff(current, index)) + (__getTabSize(el, 'x') * Math.abs(__diff(current, index)))
+        });
       case 'slideY':
-        return log('slideY');
+        return el.find('.container').animate({
+          'margin-top': __detectDirection(__diff(current, index)) + (__getTabSize(el, 'y') * Math.abs(__diff(current, index)))
+        });
     }
   };
 
@@ -135,6 +140,19 @@
         return el.find('.tab').width();
       case 'y':
         return el.find('.tab').height();
+    }
+  };
+
+  __diff = function(current, index) {
+    return current - index;
+    return log(current - index);
+  };
+
+  __detectDirection = function(value) {
+    if (value < 0) {
+      return '-=';
+    } else {
+      return '+=';
     }
   };
 
