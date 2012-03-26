@@ -38,6 +38,13 @@
     </div>
 
 ### log
+- 009
+    * DONE rewrite
+    * DONE slideX, slideY
+    * TODO transition speed
+    * TODO transition auto, timer
+    * TODO nav - prev/next
+
 - 008 : change document.ready to window.load due to dynamic height/width, preparing for slideX,slideY
 
 ### todo
