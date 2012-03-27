@@ -1,5 +1,5 @@
 (function() {
-  var $, ___detectDirection, ___diff, ___getTabSize, __addRemoveClass, __fxAction, __triggerNormal, _buildDom, _buildNav, _triggerAction;
+  var $, ___detectDirection, ___diff, ___getTabSize, __addRemoveClass, __fxAction, _buildDom, _buildNav, _triggerAction;
 
   $ = jQuery;
 
@@ -106,24 +106,27 @@
     if (click) {
       log('Trigger by click');
       return $link.click(function() {
-        return __triggerNormal(this, el, $current, fx);
+        var $index;
+        if (!($(this).hasClass("active"))) {
+          log('current slide ' + $current);
+          log($index = $(this).index());
+          __addRemoveClass(this);
+          __fxAction(el, fx, $current, $index);
+          return $current = $index;
+        }
       });
     } else {
       log('Trigger by hover');
       return $link.hover(function() {
-        return __triggerNormal(this, el, $current, fx);
+        var $index;
+        if (!($(this).hasClass("active"))) {
+          log('current slide ' + $current);
+          log($index = $(this).index());
+          __addRemoveClass(this);
+          __fxAction(el, fx, $current, $index);
+          return $current = $index;
+        }
       });
-    }
-  };
-
-  __triggerNormal = function(thisEl, el, $current, fx) {
-    var $index;
-    if (!($(thisEl).hasClass("active"))) {
-      log('current slide ' + $current);
-      log($index = $(thisEl).index());
-      __addRemoveClass(thisEl);
-      __fxAction(el, fx, $current, $index);
-      return $current = $index;
     }
   };
 
