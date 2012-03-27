@@ -12,11 +12,11 @@
     <div id="one">
         <div class="tab">
             <div class="title">one title 1</div>
-            <div class="content">this is the content</div>
+            <div>this is the content</div>
         </div>
         <div class="tab">
             <div class="title">one title 2</div>
-            <div class="content">this is not a content</div>
+            <div>this is not a content</div>
         </div>
     </div>
 
@@ -37,13 +37,23 @@
         </div>
     </div>
 
+### options
+click      : false | true           ? default on hover
+fx         : fade | slideX | slideY
+menuBottom : false | true           ? if true menu builds to the bottom
+auto       : false | 000...         ? auto timer, either false or with a time ms
+speed      : 400                    ? Transition speed
+debug      : false | true           ? Enable log messages
+
+
 ### log
 - 009
     * DONE rewrite
     * DONE slideX, slideY
     * TODO transition speed
     * TODO transition auto, timer
-    * TODO nav - prev/next
+    * TODO nav - prev/next, this builds to nav menu
+    * TODO custom for - prev/next, this can be placed anywhere
 
 - 008 : change document.ready to window.load due to dynamic height/width, preparing for slideX,slideY
 
