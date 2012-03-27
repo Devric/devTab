@@ -128,38 +128,37 @@ _buildNav = (el, navAnywhere, prevTxt, nextTxt, prevId, nextId )->
 # ===============================
 
 _triggerAction = (el, click, fx)->
+  # el : $obj
+  # fx : effect
   $link = el.find('.tab-menu').find('li')
   $current = 0
 
   if click
     log 'Trigger by click'
     $link.click(->
-      if !($(@).hasClass("active"))
-
-        log 'current slide ' + $current
-        log $index = $(@).index()
-        __addRemoveClass(this)
-        __fxAction(el, fx, $current, $index)
-
-        # update current
-        $current = $index
-
+      $current = __triggerNormal(this, el, $current, fx)
+      return $current
     )
 
   else
     log 'Trigger by hover'
     $link.hover(->
-      if !($(@).hasClass("active"))
-
-        log 'current slide ' + $current
-        log $index = $(@).index()
-
-        __addRemoveClass(this)
-        __fxAction(el, fx, $current, $index)
-
-        # update current
-        $current = $index
+      $current = 0
+      $current = __triggerNormal(this, el, $current, fx)
+      log __triggerNormal(this, el, $current, fx)
     )
+
+__triggerNormal = (thisEl, el, $current, fx) ->
+  if !($(thisEl).hasClass("active"))
+
+    log 'current slide ' + $current
+    log $index = $(thisEl).index()
+
+    __addRemoveClass(thisEl)
+    __fxAction(el, fx, $current, $index)
+
+    # update current
+    return $index
 
 
 # add/remove .active after _triggerAction
@@ -173,6 +172,7 @@ __addRemoveClass = (el) ->
 # fx actions for: used in _triggerAction
 # ===============================
 __fxAction = (el, fx, current, index)->
+  # el : $obj
   log fx
   switch fx
     when 'fade'
@@ -220,3 +220,4 @@ ___diff = (current, index) ->
 ___detectDirection = (value) ->
   # if negative than -=next else +=prev 
   if value < 0  then '-=' else '+='
+
