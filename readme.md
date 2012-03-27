@@ -54,6 +54,7 @@ debug      : false | true           ? Enable log messages
     * TODO transition auto, timer
     * TODO nav - prev/next, this builds to nav menu
     * TODO custom for - prev/next, this can be placed anywhere
+    * TODO Mobile Switch
 
 - 008 : change document.ready to window.load due to dynamic height/width, preparing for slideX,slideY
 
