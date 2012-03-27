@@ -4,12 +4,18 @@ $ = jQuery
 $.fn.extend {} =
   devTab: (options) ->
     settings =
-      click      : false    # hover or click
-      menuBottom : false
-      fx         : 'fade' # slideX | slideY
-      auto       : false
-      speed      : 400
-      debug      : true
+      click       : false    # hover or click
+      menuBottom  : false
+      fx          : 'fade' # slideX | slideY
+      auto        : false
+      speed       : 400
+      nav         : false
+      navAnywhere : false
+      prevTxt     : 'Prev'
+      nextTxt     : 'Next'
+      prevId      : 'prevID'
+      nextId      : 'nextID'
+      debug       : true
       
     settings = $.extend settings, options
     
@@ -23,7 +29,10 @@ $.fn.extend {} =
       o = settings
       $obj = $(@)
 
-      _buildDom($(@), o.menuBottom, o.fx )
+      _buildDom($obj, o.menuBottom, o.fx )
+
+      if o.nav
+        _buildNav($obj, o.navAnywhere, o.prevTxt, o.nextTxt, o.prevId, o.nextId )
 
       _triggerAction($obj, o.click, o.fx)
 
@@ -65,26 +74,26 @@ _buildDom = (el, menuPos, fx)->
 
     el.find('.wrap').css
       'overflow' : 'hidden'
-      'width'    : __getTabSize(el, 'x')
-      'height'   : __getTabSize(el, 'y')
+      'width'    : ___getTabSize(el, 'x')
+      'height'   : ___getTabSize(el, 'y')
 
     if fx =='slideX'
       el.find('.tab').css
-        'width'    : __getTabSize(el, 'x')
+        'width'    : ___getTabSize(el, 'x')
         'float'    : 'left'
 
       el.find('.container').css
-        'width'    : __getTabSize(el, 'x') * $tabNumber 
-        'height'   : __getTabSize(el, 'y')
+        'width'    : ___getTabSize(el, 'x') * $tabNumber 
+        'height'   : ___getTabSize(el, 'y')
 
 
     if fx =='slideY'
       el.find('.tab').css
-        'height'   : __getTabSize(el, 'y')
+        'height'   : ___getTabSize(el, 'y')
 
       el.find('.container').css
-        'width'    : __getTabSize(el, 'x')
-        'height'   : __getTabSize(el, 'y') * $tabNumber
+        'width'    : ___getTabSize(el, 'x')
+        'height'   : ___getTabSize(el, 'y') * $tabNumber
 
   else
 
@@ -102,57 +111,66 @@ _buildDom = (el, menuPos, fx)->
 
 
 
+# Build nav
+# ===============================
+_buildNav = (el, navAnywhere, prevTxt, nextTxt, prevId, nextId )->
+  log 'nav true'
+
+  $menu = el.find('.tab-menu')
+
+  log 'build nav dom'
+
+  $menu.prepend('<li class="prev" >' + prevTxt + '</li>')
+  $menu.append('<li class="next" >' + nextTxt + '</li>')
+
+
 # Trigger change by click | hover
 # ===============================
 
 _triggerAction = (el, click, fx)->
-  $menu = el.find('.tab-menu')
-  $link = $menu.find('li')
+  # el : $obj
+  # fx : effect
+  $link = el.find('.tab-menu').find('li')
   $current = 0
 
   if click
     log 'Trigger by click'
     $link.click(->
-      if !($(@).hasClass("active"))
-
-        log 'current slide ' + $current
-        log $index = $(@).index()
-        __addRemoveClass(this)
-        __fxAction(el, fx, $current, $index)
-
-        # update current
-        $current = $index
-
+      __triggerNormal(this, el, $current, fx)
     )
 
   else
     log 'Trigger by hover'
     $link.hover(->
-      if !($(@).hasClass("active"))
-
-        log 'current slide ' + $current
-        log $index = $(@).index()
-
-        __addRemoveClass(this)
-        __fxAction(el, fx, $current, $index)
-
-        # update current
-        $current = $index
+      __triggerNormal(this, el, $current, fx)
     )
+
+__triggerNormal = (thisEl, el, $current, fx) ->
+  if !($(thisEl).hasClass("active"))
+
+    log 'current slide ' + $current
+    log $index = $(thisEl).index()
+
+    __addRemoveClass(thisEl)
+    __fxAction(el, fx, $current, $index)
+
+    # update current
+    $current = $index
+
 
 # add/remove .active after _triggerAction
 # ===============================
-
 __addRemoveClass = (el) ->
+  # el:li
   $(el).addClass('active')
   $(el).siblings().removeClass('active')
 
 
 # fx actions for: used in _triggerAction
 # ===============================
-
 __fxAction = (el, fx, current, index)->
-  log el
+  # el : $obj
+  log fx
   switch fx
     when 'fade'
       el.find('.tab')
@@ -163,19 +181,24 @@ __fxAction = (el, fx, current, index)->
     when 'slideX'
       el.find('.container')
         .animate
-         'margin-left' : __detectDirection(__diff(current, index)) + ( __getTabSize(el,'x') * Math.abs(__diff(current, index)))
+         'margin-left' : ___detectDirection(___diff(current, index)) + ( ___getTabSize(el,'x') * Math.abs(___diff(current, index)))
 
     when 'slideY'
       el.find('.container')
         .animate
-         'margin-top' : __detectDirection(__diff(current, index)) + ( __getTabSize(el,'y') * Math.abs(__diff(current, index)))
+         'margin-top' : ___detectDirection(___diff(current, index)) + ( ___getTabSize(el,'y') * Math.abs(___diff(current, index)))
+
+
+###
+# COMMON FUNCTIONS
+###
 
 
 
 # find content width / height for: _buildDom
 # ===============================
 
-__getTabSize = (el, side)->
+___getTabSize = (el, side)->
   switch side 
     when 'x'
       return el.find('.tab').width()
@@ -185,12 +208,12 @@ __getTabSize = (el, side)->
 
 # Find direction by calc difference
 # ===============================
-__diff = (current, index) ->
+___diff = (current, index) ->
   return current - index
   log current - index
 
 # find direction by negative
 # ===============================
-__detectDirection = (value) ->
+___detectDirection = (value) ->
   # if negative than -=next else +=prev 
   if value < 0  then '-=' else '+='

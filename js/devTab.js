@@ -1,5 +1,5 @@
 (function() {
-  var $, __addRemoveClass, __detectDirection, __diff, __fxAction, __getTabSize, _buildDom, _triggerAction;
+  var $, ___detectDirection, ___diff, ___getTabSize, __addRemoveClass, __fxAction, __triggerNormal, _buildDom, _buildNav, _triggerAction;
 
   $ = jQuery;
 
@@ -12,6 +12,12 @@
         fx: 'fade',
         auto: false,
         speed: 400,
+        nav: false,
+        navAnywhere: false,
+        prevTxt: 'Prev',
+        nextTxt: 'Next',
+        prevId: 'prevID',
+        nextId: 'nextID',
         debug: true
       };
       settings = $.extend(settings, options);
@@ -25,7 +31,10 @@
         var $obj, o;
         o = settings;
         $obj = $(this);
-        _buildDom($(this), o.menuBottom, o.fx);
+        _buildDom($obj, o.menuBottom, o.fx);
+        if (o.nav) {
+          _buildNav($obj, o.navAnywhere, o.prevTxt, o.nextTxt, o.prevId, o.nextId);
+        }
         return _triggerAction($obj, o.click, o.fx);
       });
     }
@@ -51,26 +60,26 @@
       el.find('.tab').wrapAll('<div class="wrap"><div class="container"></div></div>');
       el.find('.wrap').css({
         'overflow': 'hidden',
-        'width': __getTabSize(el, 'x'),
-        'height': __getTabSize(el, 'y')
+        'width': ___getTabSize(el, 'x'),
+        'height': ___getTabSize(el, 'y')
       });
       if (fx === 'slideX') {
         el.find('.tab').css({
-          'width': __getTabSize(el, 'x'),
+          'width': ___getTabSize(el, 'x'),
           'float': 'left'
         });
         el.find('.container').css({
-          'width': __getTabSize(el, 'x') * $tabNumber,
-          'height': __getTabSize(el, 'y')
+          'width': ___getTabSize(el, 'x') * $tabNumber,
+          'height': ___getTabSize(el, 'y')
         });
       }
       if (fx === 'slideY') {
         el.find('.tab').css({
-          'height': __getTabSize(el, 'y')
+          'height': ___getTabSize(el, 'y')
         });
         el.find('.container').css({
-          'width': __getTabSize(el, 'x'),
-          'height': __getTabSize(el, 'y') * $tabNumber
+          'width': ___getTabSize(el, 'x'),
+          'height': ___getTabSize(el, 'y') * $tabNumber
         });
       }
     } else {
@@ -81,35 +90,40 @@
     return log('- finish dom building');
   };
 
-  _triggerAction = function(el, click, fx) {
-    var $current, $link, $menu;
+  _buildNav = function(el, navAnywhere, prevTxt, nextTxt, prevId, nextId) {
+    var $menu;
+    log('nav true');
     $menu = el.find('.tab-menu');
-    $link = $menu.find('li');
+    log('build nav dom');
+    $menu.prepend('<li class="prev" >' + prevTxt + '</li>');
+    return $menu.append('<li class="next" >' + nextTxt + '</li>');
+  };
+
+  _triggerAction = function(el, click, fx) {
+    var $current, $link;
+    $link = el.find('.tab-menu').find('li');
     $current = 0;
     if (click) {
       log('Trigger by click');
       return $link.click(function() {
-        var $index;
-        if (!($(this).hasClass("active"))) {
-          log('current slide ' + $current);
-          log($index = $(this).index());
-          __addRemoveClass(this);
-          __fxAction(el, fx, $current, $index);
-          return $current = $index;
-        }
+        return __triggerNormal(this, el, $current, fx);
       });
     } else {
       log('Trigger by hover');
       return $link.hover(function() {
-        var $index;
-        if (!($(this).hasClass("active"))) {
-          log('current slide ' + $current);
-          log($index = $(this).index());
-          __addRemoveClass(this);
-          __fxAction(el, fx, $current, $index);
-          return $current = $index;
-        }
+        return __triggerNormal(this, el, $current, fx);
       });
+    }
+  };
+
+  __triggerNormal = function(thisEl, el, $current, fx) {
+    var $index;
+    if (!($(thisEl).hasClass("active"))) {
+      log('current slide ' + $current);
+      log($index = $(thisEl).index());
+      __addRemoveClass(thisEl);
+      __fxAction(el, fx, $current, $index);
+      return $current = $index;
     }
   };
 
@@ -119,22 +133,26 @@
   };
 
   __fxAction = function(el, fx, current, index) {
-    log(el);
+    log(fx);
     switch (fx) {
       case 'fade':
         return el.find('.tab').hide().eq(index).show();
       case 'slideX':
         return el.find('.container').animate({
-          'margin-left': __detectDirection(__diff(current, index)) + (__getTabSize(el, 'x') * Math.abs(__diff(current, index)))
+          'margin-left': ___detectDirection(___diff(current, index)) + (___getTabSize(el, 'x') * Math.abs(___diff(current, index)))
         });
       case 'slideY':
         return el.find('.container').animate({
-          'margin-top': __detectDirection(__diff(current, index)) + (__getTabSize(el, 'y') * Math.abs(__diff(current, index)))
+          'margin-top': ___detectDirection(___diff(current, index)) + (___getTabSize(el, 'y') * Math.abs(___diff(current, index)))
         });
     }
   };
 
-  __getTabSize = function(el, side) {
+  /*
+  # COMMON FUNCTIONS
+  */
+
+  ___getTabSize = function(el, side) {
     switch (side) {
       case 'x':
         return el.find('.tab').width();
@@ -143,12 +161,12 @@
     }
   };
 
-  __diff = function(current, index) {
+  ___diff = function(current, index) {
     return current - index;
     return log(current - index);
   };
 
-  __detectDirection = function(value) {
+  ___detectDirection = function(value) {
     if (value < 0) {
       return '-=';
     } else {
