@@ -35,7 +35,7 @@
         if (o.nav) {
           _buildNav($obj, o.navAnywhere, o.prevTxt, o.nextTxt, o.prevId, o.nextId);
         }
-        return _triggerAction($obj, o.click, o.fx);
+        return _triggerAction($obj, o.click, o.fx, o.nav);
       });
     }
   });
@@ -99,7 +99,7 @@
     return $menu.append('<li class="next" >' + nextTxt + '</li>');
   };
 
-  _triggerAction = function(el, click, fx) {
+  _triggerAction = function(el, click, fx, nav) {
     var $current, $link;
     $link = el.find('.tab-menu').find('li');
     $current = 0;
@@ -110,6 +110,7 @@
         if (!($(this).hasClass("active"))) {
           log('current slide ' + $current);
           log($index = $(this).index());
+          if (nav) $index -= 1;
           __addRemoveClass(this);
           __fxAction(el, fx, $current, $index);
           return $current = $index;
@@ -122,6 +123,7 @@
         if (!($(this).hasClass("active"))) {
           log('current slide ' + $current);
           log($index = $(this).index());
+          if (nav) $index -= 1;
           __addRemoveClass(this);
           __fxAction(el, fx, $current, $index);
           return $current = $index;

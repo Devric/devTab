@@ -34,7 +34,7 @@ $.fn.extend {} =
       if o.nav
         _buildNav($obj, o.navAnywhere, o.prevTxt, o.nextTxt, o.prevId, o.nextId )
 
-      _triggerAction($obj, o.click, o.fx)
+      _triggerAction($obj, o.click, o.fx, o.nav)
 
 # ===================== Functions
 
@@ -127,7 +127,7 @@ _buildNav = (el, navAnywhere, prevTxt, nextTxt, prevId, nextId )->
 # Trigger change by click | hover
 # ===============================
 
-_triggerAction = (el, click, fx)->
+_triggerAction = (el, click, fx, nav)->
   $link = el.find('.tab-menu').find('li')
   $current = 0
 
@@ -138,6 +138,10 @@ _triggerAction = (el, click, fx)->
 
         log 'current slide ' + $current
         log $index = $(@).index()
+
+        if nav
+          $index -= 1
+
         __addRemoveClass(this)
         __fxAction(el, fx, $current, $index)
 
@@ -153,6 +157,9 @@ _triggerAction = (el, click, fx)->
 
         log 'current slide ' + $current
         log $index = $(@).index()
+
+        if nav
+          $index -= 1
 
         __addRemoveClass(this)
         __fxAction(el, fx, $current, $index)
