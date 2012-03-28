@@ -100,12 +100,14 @@
   };
 
   _triggerAction = function(el, click, fx, nav) {
-    var $current, $link;
+    var $current, $link, $next, $prev, $totalLength;
     $link = el.find('.tab-menu').find('li');
     $current = 0;
+    $totalLength = el.find('.tab').length;
+    $totalLength -= 1;
     if (click) {
       log('Trigger by click');
-      return $link.click(function() {
+      $link.click(function() {
         var $index;
         if (!($(this).hasClass("active")) & !($(this).hasClass("prev")) & !($(this).hasClass("next"))) {
           log('current slide ' + $current);
@@ -113,13 +115,12 @@
           if (nav) $index -= 1;
           __addRemoveClass(this);
           __fxAction(el, fx, $current, $index);
-          $current = $index;
+          return $current = $index;
         }
-        if ($(this).hasClass("prev") || $(this).hasClass("next")) return this;
       });
     } else {
       log('Trigger by hover');
-      return $link.hover(function() {
+      $link.hover(function() {
         var $index;
         if (!($(this).hasClass("active")) & !($(this).hasClass("prev")) & !($(this).hasClass("next"))) {
           log('current slide ' + $current);
@@ -131,6 +132,24 @@
         }
       });
     }
+    $prev = el.find('.prev');
+    $next = el.find('.next');
+    $prev.click(function() {
+      if (!(el.find('.active').index() < 2)) {
+        log('prev clicked');
+        el.find('.active').removeClass('active').prev().addClass('active');
+        __fxAction(el, fx, 1, 0);
+        return $current -= 1;
+      }
+    });
+    return $next.click(function() {
+      if (!(el.find('.active').index() > $totalLength)) {
+        log('next clicked');
+        el.find('.active').removeClass('active').next().addClass('active');
+        __fxAction(el, fx, 0, 1);
+        return $current += 1;
+      }
+    });
   };
 
   __addRemoveClass = function(el) {

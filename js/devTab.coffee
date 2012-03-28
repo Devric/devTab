@@ -130,6 +130,8 @@ _buildNav = (el, navAnywhere, prevTxt, nextTxt, prevId, nextId )->
 _triggerAction = (el, click, fx, nav)->
   $link = el.find('.tab-menu').find('li')
   $current = 0
+  $totalLength =  el.find('.tab').length
+  $totalLength -= 1
 
   if click
     log 'Trigger by click'
@@ -149,12 +151,6 @@ _triggerAction = (el, click, fx, nav)->
         # update current
         $current = $index
 
-      # add interaction with .prev, .next
-      if $(@).hasClass("prev") || $(@).hasClass("next")
-        return this
-        # find total length -2 ( prev/next )
-        # find current active
-        # trigger before and trigger next
     )
 
   else
@@ -176,6 +172,25 @@ _triggerAction = (el, click, fx, nav)->
         $current = $index
     )
 
+  # add interaction with .prev, .next
+  $prev = el.find('.prev')
+  $next = el.find('.next')
+
+  $prev.click(->
+    if !( el.find('.active').index() < 2 )
+      log 'prev clicked'
+      el.find('.active').removeClass('active').prev().addClass('active')
+      __fxAction(el, fx, 1, 0)
+      $current -= 1
+  )
+
+  $next.click(->
+    if !( el.find('.active').index() > $totalLength )
+      log 'next clicked'
+      el.find('.active').removeClass('active').next().addClass('active')
+      __fxAction(el, fx, 0, 1)
+      $current += 1
+  )
 
 # add/remove .active after _triggerAction
 # ===============================
@@ -188,6 +203,12 @@ __addRemoveClass = (el) ->
 # fx actions for: used in _triggerAction
 # ===============================
 __fxAction = (el, fx, current, index)->
+
+  # el      : obj
+  # fx      : effect
+  # current : $current
+  # index   : $index
+
   log fx
   switch fx
     when 'fade'
