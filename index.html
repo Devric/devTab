@@ -11,7 +11,8 @@
                 $('#one').devTab();
                 $('#two').devTab({'click':true, 'menuBottom':true});
                 $('#slideX').devTab({'fx':'slideX'});
-                $('#slideY').devTab({'click':true,'fx':'slideY','nav':'true'});
+                $('#slideY').devTab({'click':true,'fx':'slideY','nav':true});
+                $('#slideXnav').devTab({'fx':'slideX', 'nav':true  });
             });
         </script>
         
@@ -87,7 +88,7 @@
             <div class="dev-tab" id="slideY">
                 <div class="tab">
                     <div class="title">two title 1</div>
-                    <div class="content">this is the content</div>
+                    <div class="content">this <br /><br /><br /><br />is the content</div>
                 </div>
                 <div class="tab">
                     <div class="title">two title 2</div>
@@ -99,10 +100,23 @@
                 </div>
             </div>
         </section>
+
         <section>
-            <h3>comming soon</h3>
-            <h5>slideX</h5>
-            <h5>slideY</h5>
+            <h3>Hover action <small>slideX</small></h3>
+            <div class="dev-tab" id="slideXnav">
+                <div class="tab">
+                    <div class="title">two title 1</div>
+                    <div class="content">this is the content</div>
+                </div>
+                <div class="tab">
+                    <div class="title">two title 2</div>
+                    <div class="content">this is not a content</div>
+                </div>
+                <div class="tab">
+                    <div class="title">two title 3</div>
+                    <div class="content">just testing the content</div>
+                </div>
+            </div>
         </section>
     </body>
 </html>

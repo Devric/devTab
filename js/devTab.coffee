@@ -179,16 +179,28 @@ _triggerAction = (el, click, fx, nav)->
   $prev.click(->
     if !( el.find('.active').index() < 2 )
       log 'prev clicked'
+
+      # set transfer active class
       el.find('.active').removeClass('active').prev().addClass('active')
+
+      # apply action, the difference will only be one
       __fxAction(el, fx, 1, 0)
+
+      # update $current
       $current -= 1
   )
 
   $next.click(->
     if !( el.find('.active').index() > $totalLength )
       log 'next clicked'
+
+      # set transfer active class
       el.find('.active').removeClass('active').next().addClass('active')
+
+      # apply action, the difference will only be one
       __fxAction(el, fx, 0, 1)
+
+      # update $current
       $current += 1
   )
 
