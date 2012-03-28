@@ -149,7 +149,12 @@ _triggerAction = (el, click, fx, nav)->
         # update current
         $current = $index
 
-
+      # add interaction with .prev, .next
+      if $(@).hasClass("prev") || $(@).hasClass("next")
+        return this
+        # find total length -2 ( prev/next )
+        # find current active
+        # trigger before and trigger next
     )
 
   else

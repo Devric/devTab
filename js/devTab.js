@@ -113,8 +113,9 @@
           if (nav) $index -= 1;
           __addRemoveClass(this);
           __fxAction(el, fx, $current, $index);
-          return $current = $index;
+          $current = $index;
         }
+        if ($(this).hasClass("prev") || $(this).hasClass("next")) return this;
       });
     } else {
       log('Trigger by hover');
