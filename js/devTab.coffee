@@ -134,7 +134,8 @@ _triggerAction = (el, click, fx, nav)->
   if click
     log 'Trigger by click'
     $link.click(->
-      if !($(@).hasClass("active"))
+      # prevent interaction with .active, .prev, .next
+      if !($(@).hasClass("active")) & !($(@).hasClass("prev")) & !($(@).hasClass("next")) 
 
         log 'current slide ' + $current
         log $index = $(@).index()
@@ -148,12 +149,14 @@ _triggerAction = (el, click, fx, nav)->
         # update current
         $current = $index
 
+
     )
 
   else
     log 'Trigger by hover'
     $link.hover(->
-      if !($(@).hasClass("active"))
+      # prevent interaction with .active, .prev, .next
+      if !($(@).hasClass("active")) & !($(@).hasClass("prev")) & !($(@).hasClass("next")) 
 
         log 'current slide ' + $current
         log $index = $(@).index()

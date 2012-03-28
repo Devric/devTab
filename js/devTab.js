@@ -107,7 +107,7 @@
       log('Trigger by click');
       return $link.click(function() {
         var $index;
-        if (!($(this).hasClass("active"))) {
+        if (!($(this).hasClass("active")) & !($(this).hasClass("prev")) & !($(this).hasClass("next"))) {
           log('current slide ' + $current);
           log($index = $(this).index());
           if (nav) $index -= 1;
@@ -120,7 +120,7 @@
       log('Trigger by hover');
       return $link.hover(function() {
         var $index;
-        if (!($(this).hasClass("active"))) {
+        if (!($(this).hasClass("active")) & !($(this).hasClass("prev")) & !($(this).hasClass("next"))) {
           log('current slide ' + $current);
           log($index = $(this).index());
           if (nav) $index -= 1;
