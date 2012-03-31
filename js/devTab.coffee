@@ -6,6 +6,7 @@ $.fn.extend {}=
       click   : false
       nav     : false
       fx      : null
+      resize  : false
       debug   : false
       
     settings = $.extend settings, options
@@ -66,6 +67,10 @@ $.fn.extend {}=
         ___navTrigger(obj, $newActive, o.fx, $tabSize)
         ___navDisable(obj)
       )
+
+      if o.resize
+        ____refreshResize()
+
 
       log "\n ========== END =========== \n "
 
@@ -307,3 +312,11 @@ ____detectDirection = (value) ->
   log '+ detectDirection'
   # if negative than -=next else +=prev 
   if value < 0  then '-=' else '+='
+
+# refresh page if resize
+# ====================================
+____refreshResize = ->
+  $(window).resize(->
+    url = unescape(window.location.pathname)
+    window.location.reload( url )
+  )
