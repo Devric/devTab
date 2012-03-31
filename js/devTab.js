@@ -1,5 +1,5 @@
 (function() {
-  var $, ____activeTab, ____detectDirection, ____diff, ____getTabSize, ____setActive, ___navDisable, ___navTrigger, __beginTab, __fxAction, _buildDom, _buildSlider;
+  var $, ____activeTab, ____detectDirection, ____diff, ____getTabSize, ____setActive, ___navDisable, ___navTrigger, __beginTab, __fxAction, __rebuildSlider, _buildDom, _buildSlider;
 
   $ = jQuery;
 
@@ -35,10 +35,12 @@
         ___navDisable(obj);
         obj.on((o.click ? "click" : "hover"), 'li:not(".prev, .next, .active")', function() {
           var $current, $index;
-          $current = obj.find('li.active').index();
-          $index = $(this).index();
-          __fxAction(obj, o.fx, $current, $index, $tabSize);
-          return ___navDisable(obj);
+          if ($('div.container:animated').length < 1) {
+            $current = obj.find('li.active').index();
+            $index = $(this).index();
+            __fxAction(obj, o.fx, $current, $index, $tabSize);
+            return ___navDisable(obj);
+          }
         });
         obj.on('click', 'li.prev:not(".disabled")', function() {
           var $newActive;
@@ -52,6 +54,7 @@
           ___navTrigger(obj, $newActive, o.fx, $tabSize);
           return ___navDisable(obj);
         });
+        __rebuildSlider();
         return log("\n ========== END =========== \n ");
       });
     }
@@ -191,6 +194,10 @@
       });
       return $h;
     }
+  };
+
+  __rebuildSlider = function() {
+    return $(window).resize(function() {});
   };
 
   ____getTabSize = function(el, side) {
