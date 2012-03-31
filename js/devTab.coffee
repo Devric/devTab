@@ -41,13 +41,11 @@ $.fn.extend {}=
       # =======
       obj.on((if (o.click) then "click" else "hover"), 'li:not(".prev, .next, .active")',  ->
 
-        if  $('div.container:animated').length < 1 
+        $current = obj.find('li.active').index()
+        $index = $(this).index()
 
-          $current = obj.find('li.active').index()
-          $index = $(this).index()
-
-          __fxAction(obj, o.fx, $current, $index, $tabSize)
-          ___navDisable(obj)
+        __fxAction(obj, o.fx, $current, $index, $tabSize)
+        ___navDisable(obj)
 
       )
         
@@ -68,8 +66,6 @@ $.fn.extend {}=
         ___navTrigger(obj, $newActive, o.fx, $tabSize)
         ___navDisable(obj)
       )
-
-      __rebuildSlider()
 
       log "\n ========== END =========== \n "
 
@@ -271,10 +267,7 @@ _buildSlider = (el, fx) ->
 
     return $h
 
-__rebuildSlider = () ->
-  $(window).resize(->
-    
-  )
+
 
 # find content size to build dom
 # ====================================
