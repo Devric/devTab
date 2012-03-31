@@ -11,7 +11,8 @@
                 $('#one').devTab();
                 $('#two').devTab({'click':true, 'menuBottom':true});
                 $('#slideX').devTab({'fx':'slideX'});
-                $('#slideY').devTab({'click':true,'fx':'slideY'});
+                $('#slideY').devTab({'click':true,'fx':'slideY','nav':true});
+                $('#slideXnav').devTab({'fx':'slideX', 'nav':true  });
             });
         </script>
         
@@ -20,10 +21,10 @@
                 padding:20px;
                 border:1px solid black;
             }
-
-            .active {
-                color:red
-            }
+            li        { cursor:pointer }
+            .active   { color:green }
+            .disabled { color:red }
+            img { width: 100%; height:auto }
         </style>
 
     </head>
@@ -87,7 +88,7 @@
             <div class="dev-tab" id="slideY">
                 <div class="tab">
                     <div class="title">two title 1</div>
-                    <div class="content">this is the content</div>
+                    <div class="content">this <br /><br /><br /><br />is the content</div>
                 </div>
                 <div class="tab">
                     <div class="title">two title 2</div>
@@ -99,10 +100,27 @@
                 </div>
             </div>
         </section>
+
         <section>
-            <h3>comming soon</h3>
-            <h5>slideX</h5>
-            <h5>slideY</h5>
+            <h3>Hover action <small>slideX</small></h3>
+            <div class="dev-tab" id="slideXnav">
+                <div class="tab">
+                    <div class="title">img title 1</div>
+                    <img src="img/1.jpg" alt="1"/>
+                </div>
+                <div class="tab">
+                    <div class="title">img title 2</div>
+                    <img src="img/2.jpg" alt="2"/>
+                </div>
+                <div class="tab">
+                    <div class="title">img title 3</div>
+                    <img src="img/3.jpg" alt="3"/>
+                </div>
+                <div class="tab">
+                    <div class="title">img title 4</div>
+                    <img src="img/4.jpg" alt="4"/>
+                </div>
+            </div>
         </section>
     </body>
 </html>
