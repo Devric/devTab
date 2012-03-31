@@ -96,6 +96,14 @@ You only require to write **minimal html** and it will **auto build the structur
 
 
 ### log
+- 1.0.1
+        * Done temporary refresh on resize function
+	* TODO timer
+	* TODO speed
+	* TODO window.resize recalculate
+	* TODO hash state
+	* TODO more fx
+
 - 1.0
 	* DONE another rewrite
 	* DONE navs in default and slides fx
