@@ -1,5 +1,5 @@
 (function() {
-  var $, ____activeTab, ____detectDirection, ____diff, ____getTabSize, ____setActive, ___navDisable, ___navTrigger, __beginTab, __fxAction, __rebuildSlider, _buildDom, _buildSlider;
+  var $, ____activeTab, ____detectDirection, ____diff, ____getTabSize, ____setActive, ___navDisable, ___navTrigger, __beginTab, __fxAction, _buildDom, _buildSlider;
 
   $ = jQuery;
 
@@ -54,7 +54,6 @@
           ___navTrigger(obj, $newActive, o.fx, $tabSize);
           return ___navDisable(obj);
         });
-        __rebuildSlider();
         return log("\n ========== END =========== \n ");
       });
     }
@@ -194,10 +193,6 @@
       });
       return $h;
     }
-  };
-
-  __rebuildSlider = function() {
-    return $(window).resize(function() {});
   };
 
   ____getTabSize = function(el, side) {
