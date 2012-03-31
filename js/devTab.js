@@ -1,5 +1,5 @@
 (function() {
-  var $, ____activeTab, ____detectDirection, ____diff, ____getTabSize, ____setActive, ___navDisable, ___navTrigger, __beginTab, __fxAction, _buildDom, _buildSlider;
+  var $, ____activeTab, ____detectDirection, ____diff, ____getTabSize, ____refreshResize, ____setActive, ___navDisable, ___navTrigger, __beginTab, __fxAction, _buildDom, _buildSlider;
 
   $ = jQuery;
 
@@ -11,6 +11,7 @@
         click: false,
         nav: false,
         fx: null,
+        resize: false,
         debug: false
       };
       settings = $.extend(settings, options);
@@ -54,6 +55,7 @@
           ___navTrigger(obj, $newActive, o.fx, $tabSize);
           return ___navDisable(obj);
         });
+        if (o.resize) ____refreshResize();
         return log("\n ========== END =========== \n ");
       });
     }
@@ -227,6 +229,14 @@
     } else {
       return '+=';
     }
+  };
+
+  ____refreshResize = function() {
+    return $(window).resize(function() {
+      var url;
+      url = unescape(window.location.pathname);
+      return window.location.reload(url);
+    });
   };
 
 }).call(this);
