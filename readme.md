@@ -87,6 +87,7 @@ You only require to write **minimal html** and it will **auto build the structur
     fx          : null  | slideX | slideY
     nav         : false | true			  ? adds .prev / .next
     menuBot     : false | true            ? if true menu builds to the bottom
+    resize      : false | true            ? temporary fix for recaculating slide width
     [?] auto    : false | 000...          ? auto timer, either false or with a time ms
     [?] speed   : 400                     ? Transition speed
     [?] unbuild : null                    ? destroy plugin if it reaches certain width. 
