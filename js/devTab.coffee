@@ -41,13 +41,11 @@ $.fn.extend {}=
       # trigger both click and hover action, that this is not active/prev/next
       # =======
       obj.on((if (o.click) then "click" else "hover"), 'li:not(".prev, .next, .active")',  ->
-        if  $('div.container:animated').length < 1 
-          $current = obj.find('li.active').index()
-          $index = $(this).index()
+        $current = obj.find('li.active').index()
+        $index = $(this).index()
 
-          __fxAction(obj, o.fx, $current, $index, $tabSize)
-          ___navDisable(obj)
-
+        __fxAction(obj, o.fx, $current, $index, $tabSize)
+        ___navDisable(obj)
       )
         
       # trigger .prev if not disabled

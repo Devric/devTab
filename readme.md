@@ -96,8 +96,10 @@ You only require to write **minimal html** and it will **auto build the structur
 
 
 ### log
+- 1.0.2 
+	* Remove if :animated for lag issue
 - 1.0.1
-        * Done temporary refresh on resize function
+    * Done temporary refresh on resize function
 	* TODO timer
 	* TODO speed
 	* TODO window.resize recalculate
