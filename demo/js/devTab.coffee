@@ -46,7 +46,7 @@ $.fn.extend {}=
 
         __fxAction(obj, o.fx, $current, $index, $tabSize)
         ___navDisable(obj)
-      )
+      ).delay(800)
         
       # trigger .prev if not disabled
       # =======

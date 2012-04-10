@@ -40,7 +40,7 @@
           $index = $(this).index();
           __fxAction(obj, o.fx, $current, $index, $tabSize);
           return ___navDisable(obj);
-        });
+        }).delay(800);
         obj.on('click', 'li.prev:not(".disabled")', function() {
           var $newActive;
           $newActive = obj.find('.active').prev();
