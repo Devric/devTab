@@ -36,13 +36,11 @@
         ___navDisable(obj);
         obj.on((o.click ? "click" : "hover"), 'li:not(".prev, .next, .active")', function() {
           var $current, $index;
-          if ($('div.container:animated').length < 1) {
-            $current = obj.find('li.active').index();
-            $index = $(this).index();
-            __fxAction(obj, o.fx, $current, $index, $tabSize);
-            return ___navDisable(obj);
-          }
-        });
+          $current = obj.find('li.active').index();
+          $index = $(this).index();
+          __fxAction(obj, o.fx, $current, $index, $tabSize);
+          return ___navDisable(obj);
+        }).delay(800);
         obj.on('click', 'li.prev:not(".disabled")', function() {
           var $newActive;
           $newActive = obj.find('.active').prev();
