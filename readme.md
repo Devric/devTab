@@ -22,7 +22,7 @@ You only require to write **minimal html** and it will **auto build the structur
 <script src="…/devTab.js"></script>
 ```   
     
-* The minimal HTML structure you will need
+#### The minimal HTML structure you will need
 
 ``` xhtml
 <div id="one">
@@ -42,7 +42,6 @@ You only require to write **minimal html** and it will **auto build the structur
 
 *it will generate the structure as below, all you need to do is style it with css*
 
-``` xhtml
 <div id="one">
         
     <ul class="menu">
@@ -57,9 +56,9 @@ You only require to write **minimal html** and it will **auto build the structur
         … stuff in the second tab above…
     </div>
 </div>
-``` 
 
-* Declare the plugin in your window.load, if you want to use auto calculation
+
+####Declare the plugin in your window.load, if you want to use auto calculation
 
 
 ``` javascript
@@ -70,7 +69,7 @@ $(document).load(function(){
 
 *That will give you the basic hover tab, check the options section for slides, clicks, .prev/.next features.*
    
-* Style it
+####Style it
 
 ``` javascript
 
