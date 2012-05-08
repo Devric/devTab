@@ -1,3 +1,8 @@
+if window.version == undefined
+  window.version = {}
+version['devTab'] = '1.0.2'
+
+
 $ = jQuery
 $.fn.extend {}=
   devTab: (options) ->

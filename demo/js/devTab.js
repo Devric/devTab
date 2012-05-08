@@ -1,6 +1,10 @@
 (function() {
   var $, ____activeTab, ____detectDirection, ____diff, ____getTabSize, ____refreshResize, ____setActive, ___navDisable, ___navTrigger, __beginTab, __fxAction, _buildDom, _buildSlider;
 
+  if (window.version === void 0) window.version = {};
+
+  version['devTab'] = '1.0.2';
+
   $ = jQuery;
 
   $.fn.extend({
