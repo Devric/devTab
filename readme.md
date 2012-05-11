@@ -9,7 +9,7 @@ http://siconsulting.org.au
 http://freemoneyday.org/participate
 
 
-### Description
+### Description ###
 This is an dead easy tab system, with a few of features for both tabs and slideshow. 
 
 You only require to write **minimal html** and it will **auto build the structure** for you, either fix it's size manully or it will automatically finds the greater length for you, includes following window width resizing similar to media queries.
@@ -18,7 +18,7 @@ You only require to write **minimal html** and it will **auto build the structur
 
 **[ WARNING ]** Make sure you don't have any extra styles appled to .tab, it should only have either width or height or both properties. Any other properties may change to interupt the build.
 
-### Getting started
+### Getting started ###
 
 * You need a copy of jQuery, and load the tab script afterwards
 
@@ -27,7 +27,7 @@ You only require to write **minimal html** and it will **auto build the structur
 <script src="…/devTab.js"></script>
 ```   
     
-#### The minimal HTML structure you will need
+#### The minimal HTML structure you will need ####
 
 ``` xhtml
 <div id="one">
@@ -63,7 +63,7 @@ You only require to write **minimal html** and it will **auto build the structur
 </div>
 
 
-####Declare the plugin in your window.load, if you want to use auto calculation
+#### Declare the plugin in your window.load, if you want to use auto calculation ####
 
 
 ``` javascript
@@ -74,7 +74,7 @@ $(window).load(function(){
 
 *That will give you the basic hover tab, check the options section for slides, clicks, .prev/.next features.*
    
-####Style it
+#### Style it ####
 
 ``` javascript
 
@@ -91,7 +91,7 @@ $(window).load(function(){
 
 *you shouldn't need to style anything else other than your own contents with the .tab(s)*
 
-### options
+### Options ###
 
 **[?] = comming soon…**
 
@@ -107,33 +107,33 @@ $(window).load(function(){
     [?] unbuild : null                    ? destroy plugin if it reaches certain width. 
     debug       : false | true            ? Enable log messages
 
-### log
-- 1.0.2 
-	* Remove if :animated for lag issue
-- 1.0.1
-    * Done temporary refresh on resize function
-	* TODO timer
-	* TODO speed
+### Log ###
+- todo
 	* TODO window.resize recalculate
 	* TODO hash state
 	* TODO more fx
+    * TODO transition speed
+    * TODO transition auto, timer
+    * TODO custom for - prev/next, this can be placed anywhere
+    * TODO Mobile Switch
+
+
+- 1.0.2 
+	* Remove if :animated for lag issue
+	* Done nav - prev/next, this builds to nav menu
+	
+- 1.0.1
+    * Done temporary refresh on resize function
+
 
 - 1.0
 	* DONE another rewrite
 	* DONE navs in default and slides fx
-	* TODO timer
-	* TODO speed
-	* TODO window.resize recalculate
-	* TODO hash state
-	* TODO more fx
+
 
 - 009
     * DONE rewrite
     * DONE slideX, slideY
-    * TODO transition speed
-    * TODO transition auto, timer
-    * TODO nav - prev/next, this builds to nav menu
-    * TODO custom for - prev/next, this can be placed anywhere
-    * TODO Mobile Switch
+
 
 - 008 : change document.ready to window.load due to dynamic height/width, preparing for slideX,slideY
