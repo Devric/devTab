@@ -4,11 +4,12 @@ devTab is an **auto tab building** jQuery plugin
 blog: http://devric.co.cc/creating-jquery-tabs/  
 demo: http://devric.co.cc/lab/devtabs
 
-Live Examples:
-* siconsulting.org.au
-* freemoneyday.org/participate
+Live examples:  
+http://siconsulting.org.au  
+http://freemoneyday.org/participate
 
-### Description
+
+### Description ###
 This is an dead easy tab system, with a few of features for both tabs and slideshow. 
 
 You only require to write **minimal html** and it will **auto build the structure** for you, either fix it's size manully or it will automatically finds the greater length for you, includes following window width resizing similar to media queries.
@@ -17,83 +18,80 @@ You only require to write **minimal html** and it will **auto build the structur
 
 **[ WARNING ]** Make sure you don't have any extra styles appled to .tab, it should only have either width or height or both properties. Any other properties may change to interupt the build.
 
-### Getting started
+### Getting started ###
 
 * You need a copy of jQuery, and load the tab script afterwards
 
-xhtml
-
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-	<script src="…/devTab.js"></script>
-
+``` xhtml
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="…/devTab.js"></script>
+```   
     
-#### The minimal HTML structure you will need
+#### The minimal HTML structure you will need ####
 
-xhtml
-
-	<div id="one">
-    	<div class="tab">
-        	<div class="title">one title 1</div>
+``` xhtml
+<div id="one">
+    <div class="tab">
+        <div class="title">one title 1</div>
         this is the content
     </div>
     <div class="tab">
         <div class="title">title 2</div>
-        	<div>you can wrap a div, or anything, dosen't metter</div>
-        	and a <img src="1.jpg"/>
-        	<br />
-        	<p>actually... anything</p>
-    	</div>
-	</div>     
-
+        <div>you can wrap a div, or anything, dosen't metter</div>
+        and a <img src="1.jpg"/>
+        <br />
+        <p>actually... anything</p>
+    </div>
+</div>     
+```
 
 *it will generate the structure as below, all you need to do is style it with css*
 
-	<div id="one">
+<div id="one">
         
-    	<ul class="menu">
-        	<li>One title 1</li>
-        	<li>One title 2</li>
-   		</ul>
+    <ul class="menu">
+        <li>One title 1</li>
+        <li>One title 2</li>
+    </ul>
 
-	    <div class="tab">
-    	    <div class="content">this is the content</div>
-    	</div>
-    	<div class="tab">
-        	… stuff in the second tab above…
-   		</div>
-	</div>
-
-
-####Declare the plugin in your window.load, if you want to use auto calculation
+    <div class="tab">
+        <div class="content">this is the content</div>
+    </div>
+    <div class="tab">
+        … stuff in the second tab above…
+    </div>
+</div>
 
 
-javascript
+#### Declare the plugin in your window.load, if you want to use auto calculation ####
 
-	$(window).load(function(){
-    	$('#one').devTab();
-	});        
 
+``` javascript
+$(window).load(function(){
+    $('#one').devTab();
+});        
+```
 
 *That will give you the basic hover tab, check the options section for slides, clicks, .prev/.next features.*
    
-####Style it
+#### Style it ####
 
 ``` javascript
 
 #one .class {…}   // to style specific object
 
-	.tab {}           // if you don't define a size here, it will be calculated automatically.
- 					  // eg: if this is horizontal slides (slideX), just set width: *px, so that Y remain auto
-	.prev,.next  {}	  // this is the nav buttons
-	.menu {}
-	.menu li {}      
-	.disabled {}      // li.disabled, disabling .prev/.next when it reaches limit  
-	.active {}        // currently selected li and tab
-
+.tab {}           // if you don't define a size here, it will be calculated automatically.
+ 				  // eg: if this is horizontal slides (slideX), just set width: *px, so that Y remain auto
+.prev/.next  {}	  // this is the nav buttons
+.menu {}
+.menu li {}      
+.disabled {}      // li.disabled, disabling .prev/.next when it reaches limit  
+.active {}        // currently selected li and tab
+```
 
 *you shouldn't need to style anything else other than your own contents with the .tab(s)*
 
-### options
+### Options ###
 
 **[?] = comming soon…**
 
@@ -109,7 +107,7 @@ javascript
     [?] unbuild : null                    ? destroy plugin if it reaches certain width. 
     debug       : false | true            ? Enable log messages
 
-### log
+### Log ###
 - todo
 	* TODO window.resize recalculate
 	* TODO hash state
